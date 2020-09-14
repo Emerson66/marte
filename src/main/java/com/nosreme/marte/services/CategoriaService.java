@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.nosreme.marte.domain.Categoria;
 import com.nosreme.marte.repositories.CategoriaRepository;
+import com.nosreme.marte.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoriaService {
@@ -15,6 +16,7 @@ public class CategoriaService {
 	
 	public Categoria Buscar(Integer id) {
 		Optional<Categoria> obj = repositorio.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto nao encontrado! Id: " + id + Categoria.class.getName()));
 	}
 }
